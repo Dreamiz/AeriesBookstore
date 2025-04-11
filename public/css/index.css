@@ -1,0 +1,173 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+.navbar a {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.carousel-inner {
+  height: 300px
+}
+
+.carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* đảo trắng thành đen */
+}
+
+.new-products {
+  padding: 20px 0;
+  background-color: #f8f9fa; /* Nền sáng nhẹ cho tách biệt */
+  min-height: 80px; /* chỉnh chiều cao cho đều */
+}
+
+.section-title {
+  margin: 30px 0 20px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Lora', serif;
+}
+
+.product-container-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-container {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+  width: max-content;
+}
+
+.product-card {
+  min-width: 250px;
+  max-width: 250px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.product-card h6 {
+  font-size: 16px;
+  min-height: 48px; /* đặt chiều cao cố định để tránh lệch */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  display: -webkit-line-clamp 2; /* số dòng hiển thị */
+  -webkit-box-orient: vertical;
+}
+
+.navigation-btn {
+  border: none;
+  font-size: 24px;
+  padding: 10px 15px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ffc107;
+  color: black;
+  border-radius: 50%;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.navigation-btn:hover {
+  background-color: #e0a800;
+}
+
+.prev-btn {
+  left: 5px;
+}
+
+.next-btn {
+  right: 5px;
+}
+
+
+
+
+#menu-toggle {
+  margin-top: 16px; /* hoặc bao nhiêu tuỳ bạn */
+  margin-left: 16px; /* nếu muốn đẩy sang phải chút */
+  border-radius: 8px;
+}
+
+
+#sidebar {
+  width: 250px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+  height: 100vh;
+  overflow-y: auto; /* Thêm thanh cuộn dọc */
+  
+  /* Tùy chỉnh thanh cuộn */
+  scrollbar-width: thin; /* Thanh cuộn mỏng */
+  scrollbar-color: #ffc107 #212529; /* Màu của thanh cuộn (chủ thể, nền) */
+}
+
+/* Tùy chỉnh thanh cuộn ở trình duyệt Webkit (Chrome, Safari, Edge) */
+#sidebar::-webkit-scrollbar {
+  width: 12px; /* Tăng chiều rộng của thanh cuộn để dễ nhìn thấy */
+}
+
+#sidebar::-webkit-scrollbar-track {
+  background-color: #212529; /* Màu nền của thanh cuộn */
+  border-radius: 10px; /* Bo tròn góc nền của thanh cuộn */
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background-color: #ffc107; /* Màu của thanh kéo (thumb) */
+  border-radius: 10px; /* Bo tròn các góc của thanh kéo */
+  border: 3px solid #212529; /* Thêm viền để tách biệt thanh kéo với nền */
+}
+
+#sort-toggle {
+  margin-top: 16px; /* hoặc bao nhiêu tuỳ bạn */
+  margin-right: 16px; /* nếu muốn đẩy sang phải chút */
+  border-radius: 8px;
+}
+
+/* Đảm bảo các nút có chiều cao và kích thước giống nhau */
+.d-flex button {
+  height: 50px; /* Cố định chiều cao cho các nút */
+  padding-left: 20px; /* Cung cấp một khoảng cách để nút không bị chật */
+  padding-right: 20px;
+}
+
+/* Sắp xếp các phần tử trong cùng một hàng và tạo khoảng cách giữa chúng */
+.d-flex {
+  display: flex;
+  justify-content: space-between; /* Đặt các nút ở hai đầu của hàng */
+  align-items: center; /* Căn giữa các nút theo chiều dọc */
+}

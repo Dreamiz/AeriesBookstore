@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aeries Bookstore</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <!-- Logo -->
+    <a class="navbar-brand text-warning fw-bold me-3 fs-3" href="http://localhost:3000/">Aeries Bookstore</a>
+  
+    <!-- Toggle nút khi màn nhỏ -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- Nội dung collapse -->
+  <div class="rounded-start navbar-collapse justify-content-between mt-3 mb-2" id="navbarContent">
+
+  <!-- Khối tìm kiếm -->
+  <form class="input-group flex-grow-1" method="GET" action="/">
+    <input type="text" class="form-control" name="search" placeholder="Tìm kiếm sách..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+    <ul id="suggestions" class="list-group position-absolute w-100 d-none" style="top: 100%; z-index: 1050;"></ul>
+    <button class="btn btn-warning rounded-end" type="submit">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+
+  <!-- Nút giỏ hàng -->
+  <button class="btn btn-dark border border-warning text-warning rounded-2 ms-3" type="button" id="cartButton">
+    <i class="fas fa-shopping-cart"></i>
+  </button>
+
+  <!-- User dropdown -->
+  <div class="dropdown ms-3">
+    <button class="btn btn-dark border border-warning text-warning d-flex align-items-center justify-content-center me-1"
+            type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+            style="width: 38px; height: 38px;">
+      <i class="fas fa-user"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="userDropdown" style="min-width: 250px;">
+      <form>
+        <div class="mb-2">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Nhập email">
+        </div>
+        <div class="mb-2">
+          <label for="password" class="form-label">Mật khẩu</label>
+          <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Đăng nhập</button>
+        <div class="text-center mt-2">
+          <a href="#" class="text-decoration-none">Chưa có tài khoản? Đăng ký</a>
+        </div>
+      </form>
+    </ul>
+  </div>
+</div>
+
+  </nav>
+        
+
+  <div class="carousel-container">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/carousel1.jpeg" class="d-block w-100 img-fluid" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/carousel2.jpeg" class="d-block w-100 img-fluid" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/Carousel3.jpeg" class="d-block w-100 img-fluid" alt="Image 3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Navbar 2 - Menu items -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+    <ul class="navbar-nav d-flex flex-row">
+      <li class="nav-item mx-4">
+        <a class="fs-5 text-warning" style="font-family: 'Lora', serif;" href="#">Trang chủ</a>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="fs-5 text-warning" style="font-family: 'Lora', serif;" href="#">Hàng mới</a>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="fs-5 text-warning" style="font-family: 'Lora', serif;" href="#">Cửa hàng</a>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="fs-5 text-warning" style="font-family: 'Lora', serif;" href="#">Liên hệ</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="product-section">
+    <h2 class="section-title text-warning">Sách</h2>
+    
+    <!-- Hàng sản phẩm với các khung sản phẩm -->
+    <div class="product-container-wrapper">
+      <button id="prev-btn" class="navigation-btn prev-btn fs-4">&lt;</button>
+
+      <div class="product-container">
+        <% bookdata.forEach(book => { %>
+          <div class="product-card">
+            <img src="<%= book.image %>" alt="Book Image" style="width:100%; height:200px; object-fit:cover; border-radius: 4px;">
+            <h6 class="card-title"><%= book.name %></h6>
+            <p class="card-text"><%= book.author %></p>
+            <p class="card-text text-success"><strong>Giá: <%= book.pricef %> VNĐ</strong></p>                    
+            <!-- <p class="card-text">Release Date: <%= book.date %></p> -->
+            <form action="/api/cart" method="POST">
+              <input type="hidden" name="bookId" value="<%= book._id %>">
+              <input type="hidden" name="price" value="<%= book.price %>">
+            <button class="btn btn-outline-warning" onclick="addToCart('bookId123')">🛒 Thêm vào giỏ hàng</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+  
+      <button id="next-btn" class="navigation-btn next-btn fs-4">&gt;</button>
+    </div>
+  </div>
+
+  <!-- navbar thứ 3 -->
+  <nav class="navbar navbar-dark bg-dark justify-content-center mt-5" style="height: 60px; display: flex; align-items: center;"></nav>
+  
+  <!-- Nút Sắp xếp và Nút Thể loại nằm cùng 1 hàng -->
+<div class="d-flex justify-content-between align-items-center">
+    <!-- Nút Thể loại -->
+    <div>
+        <button class="btn btn-warning d-flex align-items-center gap-2" id="menu-toggle">
+            <i class="bi bi-list fs-4"></i> Thể loại
+        </button>
+    </div>
+  
+    <!-- Nút Sắp xếp -->
+    <div class="d-flex justify-content-end">
+        <div class="dropdown">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="sort-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Sắp xếp
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#" onclick="applySort('price', 'asc')" id="sort-low-to-high">Giá từ thấp đến cao <i class="bi bi-arrow-up"></i></a></li>
+                <li><a class="dropdown-item" href="#" onclick="applySort('price', 'desc')" id="sort-high-to-low">Giá từ cao đến thấp <i class="bi bi-arrow-down"></i></a></li>
+                <li><a class="dropdown-item" href="#" onclick="applySort('date', 'desc')" id="sort-newest">Hàng mới</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+  <!-- Sidebar trượt từ trái -->
+  <div id="sidebar" class="bg-dark text-warning position-fixed top-0 start-0 vh-100 p-4" 
+       style="width: 250px; transform: translateX(-100%); transition: transform 0.3s ease; z-index: 999;">
+       <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-outline-warning" id="close-sidebar">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    <h5 class="mb-4">Thể loại</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Cổ tích</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Đời sống</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Gia đình</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Hành động</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Kinh dị</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Khoa học</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Lịch sử</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Lãng mạn</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Phiêu lưu</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Tâm lý</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Thần thoại</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Trinh thám</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">Viễn tưởng</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">KHTN</a></li>
+      <li class="nav-item"><a class="nav-link text-warning" href="#">KHXH</a></li>
+      
+    </ul>
+  </div>
+
+  <div class="container py-5">
+    <div class="row">
+      <% if (bookdata.length === 0) { %>
+        <p class="text-center text-muted">Không tìm thấy sách nào.</p>
+      <% } else { %>
+        <% bookdata.forEach(book => { %>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="<%= book.image %>" class="card-img-top" alt="Book Image">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= book.name %></h5>
+                        <p class="card-text"><%= book.author %></p>
+                        <p class="card-text text-success"><strong>Giá: <%= book.pricef %> VNĐ</strong></p>                    
+                        <!-- <p class="card-text">Release Date: <%= book.date %></p> -->
+                        <form action="/api/cart" method="POST">
+                          <input type="hidden" name="bookId" value="<%= book._id %>">
+                          <input type="hidden" name="price" value="<%= book.price %>">
+                          <button class="btn btn-outline-warning" onclick="addToCart('<%= book._id %>')">🛒 Thêm vào giỏ hàng</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+  
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <!-- Trang đầu -->
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#" aria-label="First">
+          <span aria-hidden="true"><<</span>
+        </a>
+      </li>
+      <!-- Trang trước -->
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#" aria-label="Previous">
+          <span aria-hidden="true"><</span>
+        </a>
+      </li>
+      <!-- Các số trang (ví dụ) -->
+      <li class="page-item active">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#">3</a>
+      </li>
+      <!-- Trang tiếp theo -->
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#" aria-label="Next">
+          <span aria-hidden="true">></span>
+        </a>
+      </li>
+      <!-- Trang cuối cùng -->
+      <li class="page-item">
+        <a class="page-link border-0 bg-transparent text-warning fs-4" href="#" aria-label="Last">
+          <span aria-hidden="true">>></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const toggleButton = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+  
+    let sidebarVisible = false;
+  
+    toggleButton.addEventListener('click', () => {
+      sidebarVisible = !sidebarVisible;
+      sidebar.style.transform = sidebarVisible ? 'translateX(0)' : 'translateX(-100%)';
+    });
+
+    const closeButton = document.getElementById('close-sidebar');
+    closeButton.addEventListener('click', () => {
+    sidebar.style.transform = 'translateX(-100%)';
+    sidebarVisible = false;
+    });
+
+    document.addEventListener('click', (event) => {
+    if (sidebarVisible && !sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+    sidebar.style.transform = 'translateX(-100%)';
+    sidebarVisible = false;
+    }
+    });
+
+// Event listeners cho các nút sắp xếp
+document.getElementById("sort-low-to-high").addEventListener("click", sortLowToHigh);
+document.getElementById("sort-high-to-low").addEventListener("click", sortHighToLow);
+document.getElementById("sort-newest").addEventListener("click", sortNewest);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const prevButton = document.getElementById('prev-btn');
+  const nextButton = document.getElementById('next-btn');
+  const productContainer = document.querySelector('.product-container');
+  const productCards = document.querySelectorAll('.product-card');
+
+  if (productCards.length === 0) return;
+  
+  let currentPosition = 0;
+
+  function getProductWidth() {
+    const card = productCards[0];
+    const style = getComputedStyle(card);
+    const width = card.offsetWidth;
+    const marginRight = parseInt(style.marginRight || 20);
+    return width + marginRight;
+  }
+
+  nextButton.addEventListener('click', function () {
+    const containerVisibleWidth = document.querySelector('.product-container-wrapper').offsetWidth;
+    const totalScrollWidth = productContainer.scrollWidth;
+    const productWidth = getProductWidth();
+
+    if (currentPosition + containerVisibleWidth < totalScrollWidth) {
+      currentPosition += productWidth;
+      productContainer.style.transform = `translateX(-${currentPosition}px)`;
+    }
+  });
+
+  prevButton.addEventListener('click', function () {
+    const productWidth = getProductWidth();
+    if (currentPosition > 0) {
+      currentPosition -= productWidth;
+      productContainer.style.transform = `translateX(-${currentPosition}px)`;
+    }
+  });
+});
+
+function applySort(sort, order) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('sort', sort);
+    urlParams.set('order', order);
+    urlParams.set('page', 1); // Reset to page 1 when sorting
+    window.location.search = urlParams.toString();
+}
+
+
+const input = document.getElementById('searchInput');
+const suggestions = document.getElementById('suggestions');
+
+// Lấy lịch sử từ localStorage
+let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+// Render gợi ý
+function renderSuggestions() {
+  suggestions.innerHTML = '';
+  history.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    li.textContent = item;
+
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-danger';
+    btn.textContent = 'X';
+    btn.onclick = () => {
+      history.splice(index, 1);
+      localStorage.setItem('searchHistory', JSON.stringify(history));
+      renderSuggestions();
+    };
+
+    li.appendChild(btn);
+    suggestions.appendChild(li);
+  });
+}
+
+// Lưu từ khóa mới
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const value = input.value.trim();
+    if (value && !history.includes(value)) {
+      history.unshift(value);
+      if (history.length > 5) history.pop(); // giữ tối đa 5 gợi ý
+      localStorage.setItem('searchHistory', JSON.stringify(history));
+    }
+    renderSuggestions();
+  }
+});
+
+// Hiện gợi ý khi focus
+input.addEventListener('focus', renderSuggestions);
+
+// Ẩn gợi ý khi click bên ngoài
+document.addEventListener('click', e => {
+  if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+    suggestions.innerHTML = '';
+  }
+});
+
+function addToCart(bookId) {
+    console.log("Thêm vào giỏ hàng:", bookId);
+    // Gửi request bằng fetch/AJAX tùy bạn muốn xử lý thêm
+  }
+
+  </script>  
+      
+</body>
+<footer class="bg-dark text-warning text-center py-4">
+    <div class="container">
+        <p class="mb-1"><strong>Aeries Bookstore</strong></p> <!-- Tên cửa hàng -->
+        <p class="mb-1">Liên hệ: <a href="mailto:info@AeriesBookstore_283.com" class="text-warning">info@AeriesBookstore_283.com</a></p> <!-- Thông tin liên hệ -->
+        <p>Địa chỉ: Số 28/3, Đường Minh Phụng, Thành phố Hồ Chí Minh</p> <!-- Địa chỉ -->
+        <p>&copy; 2025 Aeries Bookstore. Tất cả các quyền được bảo lưu.</p>
+    </div>
+</footer>
+
+</html>
